@@ -14,9 +14,7 @@ describe('app', function () {
             expect(app.generateMessage('Kowalski')).toEqual({vowel:3, palindrome:false});
             expect(app.generateMessage('wyraz')).toEqual({vowel:2, palindrome:false});
         });
-        it('should throw exception when argument is empty String', function(){
-            expect(app.generateMessage('')).toEqual(new Error('Empty string!'));
-        })
+
     });
 
     describe('isPalindrome', function () {
@@ -105,23 +103,79 @@ describe('app', function () {
     describe('vowelCount', function () {
 
         describe('toHaveBeenCalled', function () {
-
+            beforeAll(function(){
+                spyOn(app,'vovelCount');
+                app.generateMessage('rower');
+            });
+            it('should call vowelCount function',function(){
+                expect(app.vowelCount).toHaveBeenCalled();
+                expect(app.vowelCount).toHaveBeenCalledWith();
+            })
         });
 
         describe('and.callThrough', function () {
-
+            beforeAll(function(){
+                spyOn(app,'vowelCount').and.callThrough();
+                app.generateMessage('palindrom');
+            });
+            it('should call vowelCount function when generateMessage is call',function(){
+                expect(app.vowelCount).toHaveBeenCalled();
+                expect(app.vowelCount).toHaveBeenCalledWith('palindrom');
+            })
         });
 
         describe('and.returnValue', function () {
-
+            var numberOfVowels;
+            beforeAll(function(){
+                spyOn(app,'vovelCount').and.returnValue(3);
+            });
+            it('should call vovelCount and return 3',function(){
+                 numberOfVowels=app.vovelCount('kakao');
+                expect(numberOfVowels).toBe(3);
+            });
+            it('should call generateMessege nad vowelCount should return 3',function(){
+                numberOfVowels = app.generateMessage('kakao');
+                expect(numberOfVowels).toEqual({vowel: 3,palindrome:false});
+            });
         });
 
         describe('and.callFake', function () {
-
+            var numberOfVowels;
+            beforeAll(function() {
+                spyOn(app,'vowelCount').and.callFake(function(str){
+                    var vowelList = 'aeiouy', //AEIOUY',
+                        vovCount = 0;
+                    for (var i = 0, strLength = str.length; i < strLength; i++) {
+                        if (vowelList.indexOf(str[i]) !== -1) {
+                            vovCount++;
+                        }
+                    }
+                    return vovCount;
+                });
+            });
+            it('should call vowelCount fake function', function(){
+                numberOfVowels = app.vowelCount("KakaO");
+                expect(numberOfVowels).toBe(2);
+            });
+            it('should call generateMessage and vowelCount fake function', function(){
+                numberOfVowels = app.generateMessage('KakaO');
+                expect(numberOfVowels).toEqual({vowel:2, palindrome:false});
+            });
         });
 
         describe('calls.count()', function () {
-
+            var numberOfVowels;
+            beforeAll(function(){
+                spyOn(app,'vowelCount').and.callThrough();
+            });
+            it('should notice that call vawelCount is call',function(){
+                numberOfVowels = app.vowelCount('kajak');
+                expect(app.vowelCount.calls.count()).toBe(1);
+            });
+            it('should notice that vowelCount is call when generateMessage is call', function(){
+                numberOfVowels = app.generateMessage('kajak');
+                expect(app.vowelCount.calls.count()).toEqual(2);
+            });
         });
     });
 
