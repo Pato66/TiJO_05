@@ -22,7 +22,7 @@ describe('app', function () {
         describe('toHaveBeenCalled', function () {
             beforeAll(function(){
                 spyOn(app, 'isPalindrome');
-                app.generateMessage('kajak');
+                app.isPalindrome('kajak');
             });
             it('should call isPalindrome function', function(){
                 expect(app.isPalindrome).toHaveBeenCalled();
@@ -105,7 +105,7 @@ describe('app', function () {
         describe('toHaveBeenCalled', function () {
             beforeAll(function(){
                 spyOn(app,'vovelCount');
-                app.generateMessage('rower');
+                app.vowelCount('rower');
             });
             it('should call vowelCount function',function(){
                 expect(app.vowelCount).toHaveBeenCalled();
