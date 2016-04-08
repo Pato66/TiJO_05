@@ -37,7 +37,7 @@ describe('app', function () {
             });
             it('should call isPalindrome function when generateMessage function is called',function(){
                 expect(app.isPalindrome).toHaveBeenCalled();
-                expect(app.isPalindrome).toHaveBeenCalledWith();
+                expect(app.isPalindrome).toHaveBeenCalledWith('wyraz');
             });
         });
 
@@ -52,7 +52,7 @@ describe('app', function () {
             });
             it('should call generateMessage and isPalindrome should return true',function(){
                 czy_ok = app.generateMessage('zaraz');
-                expect(czy_ok).toEqual({vovel:2 ,palindrome:true})
+                expect(czy_ok).toEqual({vowel:2 ,palindrome:true})
             });
         });
 
@@ -80,7 +80,7 @@ describe('app', function () {
             });
             it('should call generateMessage and isPalindrome fake function',function(){
                 czy_ok = app.generateMessage('nowy');
-                expect(age).toEqual({vovel:1,palindrome:true})
+                expect(czy_ok).toEqual({vowel:2,palindrome:true})
             });
         });
 
@@ -91,11 +91,11 @@ describe('app', function () {
             });
             it('should notice that isPalindrome function is call',function(){
                 czy_ok = app.isPalindrome('jeden');
-                expect(app.isPalindrome).calls.count().toBe(1);
+                expect(app.isPalindrome.calls.count()).toBe(1);
             });
             it('should notice that isPalindrome is call when generateMesage is call',function(){
                 czy_ok=app.generateMessage('jeden');
-                expect(app.isPalindrome('jeden').calls.count()).toEqual(2);
+                expect(app.isPalindrome.calls.count()).toEqual(2);
             });
         });
     });
@@ -104,12 +104,12 @@ describe('app', function () {
 
         describe('toHaveBeenCalled', function () {
             beforeAll(function(){
-                spyOn(app,'vovelCount');
+                spyOn(app,'vowelCount');
                 app.vowelCount('rower');
             });
             it('should call vowelCount function',function(){
                 expect(app.vowelCount).toHaveBeenCalled();
-                expect(app.vowelCount).toHaveBeenCalledWith();
+                expect(app.vowelCount).toHaveBeenCalledWith('rower');
             })
         });
 
@@ -127,10 +127,10 @@ describe('app', function () {
         describe('and.returnValue', function () {
             var numberOfVowels;
             beforeAll(function(){
-                spyOn(app,'vovelCount').and.returnValue(3);
+                spyOn(app,'vowelCount').and.returnValue(3);
             });
-            it('should call vovelCount and return 3',function(){
-                 numberOfVowels=app.vovelCount('kakao');
+            it('should call vowelCount and return 3',function(){
+                 numberOfVowels=app.vowelCount('kakao');
                 expect(numberOfVowels).toBe(3);
             });
             it('should call generateMessege nad vowelCount should return 3',function(){
